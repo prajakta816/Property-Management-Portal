@@ -1,6 +1,7 @@
 import type {Role} from "./role.js";
 import { saveRole , getRole } from "./role.js";
 import { renderSidebar } from "./sidebar.js";
+import { showLoder,hideLoader } from "./loader.js";
 
 function isValidRole(value : String) : value is Role{
     return (
@@ -25,3 +26,4 @@ roleSelect.addEventListener("change" , ()=>{
         renderSidebar(selectedRole);
     console.log("selected role is : " ,selectedRole);}
 });
+
