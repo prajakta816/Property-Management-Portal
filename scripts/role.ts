@@ -1,5 +1,7 @@
 export type Role = "admin"|"agent"|"commission-manager"
 
+export type Gender = "male"|"female"|"other"|"prefer-not-to-say"
+
 export function saveRole(role : Role) : void {
     sessionStorage.setItem("role" , role);
 }

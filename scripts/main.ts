@@ -1,7 +1,10 @@
 import type {Role} from "./role.js";
 import { saveRole , getRole } from "./role.js";
 import { renderSidebar } from "./sidebar.js";
-import { showLoder,hideLoader } from "./loader.js";
+import { showLoader,hideLoader } from "./loader.js";
+import { initializeUsers } from "./user.js";
+
+initializeUsers();
 
 function isValidRole(value : String) : value is Role{
     return (
@@ -22,8 +25,17 @@ if(savedRole){
 roleSelect.addEventListener("change" , ()=>{
     const selectedRole = roleSelect.value;
     if(isValidRole(selectedRole)){
-        saveRole(selectedRole);
-        renderSidebar(selectedRole);
+        showLoader();
+
+        setTimeout(() => {
+            saveRole(selectedRole);
+
+            hideLoader();
+
+            renderSidebar(selectedRole);
+
+        }, 500);
+        
     console.log("selected role is : " ,selectedRole);}
 });
 

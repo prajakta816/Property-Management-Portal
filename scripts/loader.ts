@@ -4,7 +4,7 @@ if(!loader){
     throw new Error("Loader element not found");
 }
 
-export function showLoder():void{
+export function showLoader():void{
     const loader = document.getElementById("loader");
     if(!loader){
         throw new Error("Loader element not found");
