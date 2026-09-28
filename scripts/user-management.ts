@@ -1,3 +1,4 @@
+
 import { getRole } from "./role.js";
 import { getCurrentUser, clearCurrentUser, getUsers, saveUsers, User } from "./user.js";
 import { renderSidebar } from "./sidebar.js";
@@ -59,7 +60,7 @@ addUserButton.addEventListener("click", () => {
 
     userForm.reset();
 
-    // Clear validation messages
+    // Clear validation when modal opens
     nameError.textContent = "";
     emailError.textContent = "";
     passwordError.textContent = "";
@@ -118,11 +119,13 @@ function validateName(): boolean {
     if (!name) {
         nameError.textContent = "Fill your name";
         nameInput.classList.add("is-invalid");
+        nameInput.classList.remove("is-valid");
         return false;
     }
     if (!isValidName(name)) {
         nameError.textContent = "Enter a valid name";
         nameInput.classList.add("is-invalid");
+        nameInput.classList.remove("is-valid");
         return false;
     }
 
@@ -132,8 +135,7 @@ function validateName(): boolean {
     return true;
 }
 
-nameInput.addEventListener("input", () => { validateName(); });
-nameInput.addEventListener("blur", () => { validateName(); });//when user leave the field 
+// Validation now runs only on Save User
 
 function validateEmail(): boolean {
     const email = emailInput.value.trim();
@@ -169,15 +171,13 @@ function validateEmail(): boolean {
     return true;
 }
 
-emailInput.addEventListener("input", () => { validateEmail(); });
-emailInput.addEventListener("blur", () => { validateEmail(); });
-
 function validatePassword(): boolean {
     const password = passwordInput.value.trim();
 
     if (password === "") {
         passwordError.textContent = "Fill your password";
         passwordInput.classList.add("is-invalid");
+        passwordInput.classList.remove("is-valid");
         return false;
     }
 
@@ -185,6 +185,7 @@ function validatePassword(): boolean {
         passwordError.textContent =
             "Password must be at least 8 characters with uppercase, lowercase, number and special character";
         passwordInput.classList.add("is-invalid");
+        passwordInput.classList.remove("is-valid");
         return false;
     }
 
@@ -195,21 +196,20 @@ function validatePassword(): boolean {
     return true;
 }
 
-passwordInput.addEventListener("input", () => { validatePassword(); });
-passwordInput.addEventListener("blur", () => { validatePassword(); });
-
 function validateGender(): boolean {
     const gender = genderSelect.value;
 
     if (gender === "") {
         genderError.textContent = "Select your gender";
         genderSelect.classList.add("is-invalid");
+        genderSelect.classList.remove("is-valid");
         return false;
     }
 
     if (!isValidGender(gender)) {
         genderError.textContent = "Select a valid gender";
         genderSelect.classList.add("is-invalid");
+        genderSelect.classList.remove("is-valid");
         return false;
     }
 
@@ -220,8 +220,10 @@ function validateGender(): boolean {
     return true;
 }
 
+// Selection only clears old validation
 genderSelect.addEventListener("change", () => {
-    validateGender();
+    genderSelect.classList.remove("is-invalid", "is-valid");
+    genderError.textContent = "";
 
     if (genderSelect.value != "") {
         clearGenderButton.classList.add("visible");
@@ -236,7 +238,7 @@ clearGenderButton.addEventListener("click", () => {
     clearGenderButton.classList.remove("visible");
 
     genderError.textContent = "";
-    genderSelect.classList.remove("is-valid")
+    genderSelect.classList.remove("is-valid", "is-invalid");
 })
 
 function validateRole(): boolean {
@@ -245,12 +247,14 @@ function validateRole(): boolean {
     if (role === "") {
         roleError.textContent = "Select a role";
         roleSelect.classList.add("is-invalid");
+        roleSelect.classList.remove("is-valid");
         return false;
     }
 
     if (!isValidRole(role)) {
         roleError.textContent = "Select a valid role";
         roleSelect.classList.add("is-invalid");
+        roleSelect.classList.remove("is-valid");
         return false;
     }
 
@@ -261,8 +265,10 @@ function validateRole(): boolean {
     return true;
 }
 
+// Selection only clears old validation
 roleSelect.addEventListener("change", () => {
-    validateRole();
+    roleSelect.classList.remove("is-invalid", "is-valid");
+    roleError.textContent = "";
 
     if (roleSelect.value != "") {
         clearRoleButton.classList.add("visible");
@@ -277,7 +283,7 @@ clearRoleButton.addEventListener("click", () => {
     clearRoleButton.classList.remove("visible");
 
     roleError.textContent = "";
-    roleSelect.classList.remove("is-valid");
+    roleSelect.classList.remove("is-valid", "is-invalid");
 
 })
 
@@ -285,6 +291,7 @@ clearRoleButton.addEventListener("click", () => {
 userForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    // Validate only when Save User is clicked
     const isNameValid = validateName();
     const isEmailValid = validateEmail();
     const isPasswordValid = validatePassword();
@@ -400,7 +407,7 @@ function renderUsers(): void {
 
             row.innerHTML = `
             <td>${!user.name || user.name === "undefined" ? "Unknown" : user.name}</td>            
-            <td>${user.email}</td>
+            <td>${user.email}</td> 
             
             <td><button type="button" class="btn btn-sm btn-primary view-user" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#viewUserModal" > View </button></td>
             <td>${user.id !== "1" ? `<button type="button" class="btn btn-sm btn-warning edit-user" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#userModal" > Edit </button>` : ""}</td>
@@ -498,3 +505,4 @@ usersTableBody.addEventListener("click", (event) => {
 
     console.log("User deleted successfully");
 });
+
