@@ -1,6 +1,7 @@
 import { getUsers, initializeUsers, saveCurrentUser } from "./user.js";
 import { saveRole } from "./role.js";
 import { isValidEmail, isValidPassword } from "./validation.js";
+import { adminUrl, agentUrl, commissionUrl } from "./constant.js";
 
 const loginForm = document.getElementById("loginForm") as HTMLFormElement;
 const emailInput = document.getElementById("emailInput") as HTMLInputElement;
@@ -12,8 +13,6 @@ const loginErrorMessage = document.getElementById("loginErrorMessage") as HTMLDi
 //const togglePasswordBtn = document.getElementById("togglePasswordBtn") as HTMLButtonElement | null;
 
 let formSubmittedOnce = false;
-
-
 
 initializeUsers();
 
@@ -158,13 +157,13 @@ loginForm.addEventListener("submit", (event) => {
     // Redirect to the respective role dashboard
     switch (selectedUser.role) {
         case "admin":
-            window.location.href = "admin-dashboard.html";
+            window.location.href = adminUrl;
             break;
         case "agent":
-            window.location.href = "agent-dashboard.html";
+            window.location.href = agentUrl;
             break;
         case "commission-manager":
-            window.location.href = "commission-dashboard.html";
+            window.location.href = commissionUrl;
             break;
         default:
             loginErrorMessage.textContent = "Unrecognized user role. Please contact administrator.";
