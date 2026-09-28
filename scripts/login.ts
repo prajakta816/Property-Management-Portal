@@ -12,8 +12,6 @@ const passwordErrorMessage = document.getElementById("passwordErrorMessage") as 
 const loginErrorMessage = document.getElementById("loginErrorMessage") as HTMLDivElement;
 //const togglePasswordBtn = document.getElementById("togglePasswordBtn") as HTMLButtonElement | null;
 
-let formSubmittedOnce = false;
-
 initializeUsers();
 
 function hideLoginError(): void {
@@ -66,15 +64,9 @@ function validateEmail(): boolean {
     return true;
 }
 
+// We don't validate while typing because errors should appear only after Login is clicked.
 emailInput.addEventListener("input", () => {
     hideLoginError();
-    if (formSubmittedOnce) {
-        validateEmail();
-    }
-});
-
-emailInput.addEventListener("blur", () => {
-    if (formSubmittedOnce) { validateEmail(); }
 });
 
 function validatePassword(): boolean {
@@ -102,17 +94,9 @@ function validatePassword(): boolean {
     return true;
 }
 
+// Same here, typing should not trigger validation before clicking Login.
 passwordInput.addEventListener("input", () => {
     hideLoginError();
-    if (formSubmittedOnce) {
-        validatePassword();
-    }
-});
-
-passwordInput.addEventListener("blur", () => {
-    if (formSubmittedOnce) {
-        validatePassword();
-    }
 });
 
 if (!loginForm) {
@@ -122,8 +106,8 @@ if (!loginForm) {
 loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
     hideLoginError();
-    formSubmittedOnce = true;
 
+    // Validation now happens only when the user clicks Login.
     const isEmailValid = validateEmail();
     const isPasswordValid = validatePassword();
 
@@ -170,3 +154,4 @@ loginForm.addEventListener("submit", (event) => {
             loginErrorMessage.classList.remove("d-none");
     }
 });
+
