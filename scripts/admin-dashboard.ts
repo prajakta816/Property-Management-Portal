@@ -4,10 +4,17 @@ import { renderSidebar } from "./sidebar.js";
 import { loginUrl } from "./constant.js";
 
 const userRole = getRole();
-if (userRole !== "admin") {
+// Check access before showing the page.
+const currentRole = getRole();
+
+if (currentRole !== "admin") {
     alert("Access denied. Admin access only.");
-    window.location.href = loginUrl;
+    window.location.replace(loginUrl);
+} else {
+    document.documentElement.style.visibility = "visible";
 }
+
+renderSidebar("admin");
 
 renderSidebar("admin");
 
