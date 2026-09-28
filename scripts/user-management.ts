@@ -60,6 +60,8 @@ addUserButton.addEventListener("click", () => {
 
     userForm.reset();
 
+    emailInput.readOnly = false;//to enable email field 
+
     // Clear validation when modal opens
     nameError.textContent = "";
     emailError.textContent = "";
@@ -473,6 +475,8 @@ usersTableBody.addEventListener("click", (event) => {
     passwordInput.value = selectedUser.password || "";
     genderSelect.value = selectedUser.gender || "";
     roleSelect.value = selectedUser.role || "";
+
+    emailInput.readOnly = true;//cant be modified
 
     clearGenderButton.classList.toggle("visible", !!genderSelect.value);
     clearRoleButton.classList.toggle("visible", !!roleSelect.value);
