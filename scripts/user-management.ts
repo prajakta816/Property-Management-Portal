@@ -523,7 +523,7 @@ function renderUsers(): void {
     if (users.length === 0) {
         usersTableBody.innerHTML = `
             <tr>
-                <td colspan="5" class="text-center py-4 text-muted">No users found</td>
+                <td colspan="4" class="text-center py-4 text-muted">No users found</td>
             </tr>
         `;
 
@@ -533,12 +533,28 @@ function renderUsers(): void {
     users.forEach((user) => {
         const row = document.createElement("tr");
 
+        // Actions are grouped into one column to keep the table compact and easier to scan.
         row.innerHTML = `
+            <td class="text-center">
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-sm btn-primary user-action-button view-user" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#viewUserModal" title="View user" aria-label="View user">
+                        <i class="bi bi-eye"></i>
+                    </button>
+
+                    ${user.id !== "1" ? `
+                    <button type="button" class="btn btn-sm btn-warning user-action-button edit-user" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#userModal" title="Edit user" aria-label="Edit user">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-sm btn-danger user-action-button delete-user" data-id="${user.id}" title="Delete user" aria-label="Delete user">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    ` : ""}
+                </div>
+            </td>
             <td>${!user.name || user.name === "undefined" ? "Unknown" : user.name}</td>
             <td>${user.email}</td>
-            <td><button type="button" class="btn btn-sm btn-primary view-user" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#viewUserModal">View</button></td>
-            <td>${user.id !== "1" ? `<button type="button" class="btn btn-sm btn-warning edit-user" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#userModal">Edit</button>` : ""}</td>
-            <td>${user.id !== "1" ? `<button type="button" class="btn btn-sm btn-danger delete-user" data-id="${user.id}">Delete</button>` : ""}</td>
+            <td>${user.role}</td>
         `;
 
         usersTableBody.appendChild(row);

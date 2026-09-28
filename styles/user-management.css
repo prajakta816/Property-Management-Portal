@@ -89,6 +89,35 @@ body {
     border-bottom: 1px solid #eef0f2;
 }
 
+.users-card th:first-child,
+.users-card td:first-child {
+    width: 150px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/*
+    Icons keep the action column compact while
+    title and aria-label still explain each action.
+*/
+.user-action-button {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-right: 4px;
+}
+
+.user-action-button:last-child {
+    margin-right: 0;
+}
+
+.user-action-button i {
+    font-size: 16px;
+}
+
 .role-wrapper {
     position: relative;
 }
@@ -188,4 +217,46 @@ body {
 
 .modal-body {
     overflow-y: auto;
+}
+
+.user-detail {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eef0f2;
+}
+
+.user-detail:last-child {
+    border-bottom: 0;
+}
+
+.user-detail span {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.user-detail strong {
+    text-align: right;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .page-header .btn {
+        width: 100%;
+    }
+
+    .users-card {
+        padding: 18px;
+    }
 }
