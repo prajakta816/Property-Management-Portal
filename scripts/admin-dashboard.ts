@@ -1,22 +1,22 @@
+//admin-dashboard.ts
+
 import { getCurrentUser, clearCurrentUser, getUsers } from "./user.js";
 import { getRole } from "./role.js";
 import { renderSidebar } from "./sidebar.js";
 import { loginUrl } from "./constant.js";
 
-const userRole = getRole();
 // Check access before showing the page.
 const currentRole = getRole();
 
 if (currentRole !== "admin") {
     alert("Access denied. Admin access only.");
     window.location.replace(loginUrl);
+    throw new Error("Unauthorized access");    
 } else {
     document.documentElement.style.visibility = "visible";
 }
 
-renderSidebar("admin");
-
-renderSidebar("admin");
+renderSidebar(currentRole);
 
 const currentUser = getCurrentUser();
 const currentUserDisplay = document.getElementById("currentUserDisplay");
