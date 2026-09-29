@@ -2,7 +2,7 @@ const nameRegex = /^[A-Za-z]+(?:\s[A-Za-z]+)*$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
-import { isGender } from "./role";
+import { isGender, isRole } from "./role";
 import type { Role , Gender} from "./role";
 
 export function isValidName(name : string): boolean{
@@ -18,9 +18,7 @@ export function isValidPassword(password : string) : boolean{
 }
 
 export function isValidRole(value : string) : value is Role{
-    return(
-        value === "admin" || value === "agent" || value ==="commission-manager"
-    )
+    return  isRole(value);
 }
 
 export function isValidGender(value : string) : value is Gender{

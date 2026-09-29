@@ -28,6 +28,10 @@ export function isGender(value:string):value is Gender{
 return genders.includes(value as Gender)
 }
 
+//to remove hardcoded values of validation.ts for role 
+export function isRole(value : string): value is Role{
+    return roles.includes(value as Role)
+}
 export function saveRole(role: Role): void {
     sessionStorage.setItem("role", role);
 }
