@@ -1,5 +1,32 @@
 // user-management.ts
-import { getRole } from "./role.js";
+import { getRole ,getGenders} from "./role.js";
+
+// Gender options come from role.ts so the form and filter use the same source.
+function populateGenders(): void {
+    const genders = getGenders();
+
+    genderSelect.innerHTML = `<option value="">Select Gender</option>`;
+    genderFilter.innerHTML = `<option value="">All Gender</option>`;
+
+    genders.forEach((gender) => {
+        const option = document.createElement("option");
+
+        option.value = gender;
+        option.textContent = gender === "prefer-not-to-say"
+            ? "Prefer not to say"
+            : gender.charAt(0).toUpperCase() + gender.slice(1);
+
+        genderSelect.appendChild(option);
+
+        const filterOption = document.createElement("option");
+
+        filterOption.value = gender;
+        filterOption.textContent = option.textContent;
+
+        genderFilter.appendChild(filterOption);
+    });
+}
+
 import { getCurrentUser, clearCurrentUser, getUsers, saveUsers, User } from "./user.js";
 import { renderSidebar } from "./sidebar.js";
 import { loginUrl } from "./constant.js";
@@ -561,6 +588,7 @@ function renderUsers(): void {
     });
 }
 
+populateGenders();
 renderUsers();
 
 usersTableBody.addEventListener("click", (event) => {

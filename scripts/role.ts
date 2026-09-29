@@ -1,17 +1,38 @@
-export type Role = "admin"|"agent"|"commission-manager"
+export type Role = "admin"|"agent"|"commission-manager";
 
-export type Gender = "male"|"female"|"other"|"prefer-not-to-say"
+export type Gender = "male"|"female"|"other"|"prefer-not-to-say";
 
-export function saveRole(role : Role) : void {
-    sessionStorage.setItem("role" , role);
+const roles: Role[] = [
+    "admin",
+    "agent",
+    "commission-manager"
+];
+
+const genders: Gender[] = [
+    "male",
+    "female",
+    "other",
+    "prefer-not-to-say"
+];
+
+export function getRoles(): Role[] {
+    return [...roles];
 }
 
-export function getRole(): Role | null{
+export function getGenders(): Gender[] {
+    return [...genders];
+}
+
+export function saveRole(role: Role): void {
+    sessionStorage.setItem("role", role);
+}
+
+export function getRole(): Role | null {
     const storedRole = sessionStorage.getItem("role");
 
-    if(storedRole ===  "admin" || storedRole === "agent" || storedRole === "commission-manager")
-        {
-        return storedRole;
-        }
-        return null;
+    if (storedRole && roles.includes(storedRole as Role)) {
+        return storedRole as Role;
+    }
+
+    return null;
 }
