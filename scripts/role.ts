@@ -23,6 +23,11 @@ export function getGenders(): Gender[] {
     return [...genders];
 }
 
+//to remove hardcode values of genders in validation.ts we are using these logic
+export function isGender(value:string):value is Gender{
+return genders.includes(value as Gender)
+}
+
 export function saveRole(role: Role): void {
     sessionStorage.setItem("role", role);
 }
