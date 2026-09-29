@@ -1,5 +1,5 @@
 // user-management.ts
-import { getRole ,getGenders} from "./role.js";
+import { getRole ,getGenders,getRoles} from "./role.js";
 
 // Gender options come from role.ts so the form and filter use the same source.
 function populateGenders(): void {
@@ -24,6 +24,31 @@ function populateGenders(): void {
         filterOption.textContent = option.textContent;
 
         genderFilter.appendChild(filterOption);
+    });
+}
+
+//Role options come from role.ts so the form and filter use the same source.
+function populateRoles(): void{
+    const roles = getRoles().filter((role)=>role != "admin");//now admin role will not be in any roe dropdown 
+    
+    roleSelect.innerHTML =  `<option value="">Select Role</option>`;
+    roleFilter.innerHTML = `<option value="">All Role</option>`;
+
+    roles.forEach((role) => {
+    const option = document.createElement("option");
+    
+    option.value = role ;
+    option.textContent = role === "commission-manager" ? "commission manager" :role.charAt(0).toUpperCase() + role.slice(1);
+
+    roleSelect.appendChild(option);
+
+    const filterOption = document.createElement("option");
+   
+    filterOption.value = role;
+    filterOption.textContent = option.textContent;
+
+    roleFilter.appendChild(filterOption);
+
     });
 }
 
@@ -588,6 +613,8 @@ function renderUsers(): void {
     });
 }
 
+
+populateRoles();
 populateGenders();
 renderUsers();
 
