@@ -53,6 +53,43 @@
     font-weight: 600;
 }
 
+
+.password-input-wrapper .form-control::-ms-reveal,
+.password-input-wrapper .form-control::-ms-clear {
+    display: none;
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-input-wrapper .form-control {
+    padding-right: 44px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+
+    border: 0;
+    background: transparent;
+
+    color: #64748b;
+    padding: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: #334155;
+}
+
 @media (max-width: 480px) {
     .login-card {
         padding: 24px !important;
