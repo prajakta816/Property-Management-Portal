@@ -2,8 +2,8 @@ const nameRegex = /^[A-Za-z]+(?:\s[A-Za-z]+)*$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
-import { isGender, isRole } from "./role";
-import type { Role , Gender} from "./role";
+import { isGender, isRole } from "./role.js";
+import type { Role , Gender} from "./role.js";
 
 export function isValidName(name : string): boolean{
     return nameRegex.test(name.trim());
