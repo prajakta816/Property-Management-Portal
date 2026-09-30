@@ -52,6 +52,13 @@ function populateRoles(): void{
     });
 }
 
+import { showLoader, hideLoader } from "./loader.js";
+function waitForTwoSeconds(): Promise<void> {
+    return new Promise((resolve) => {
+        setTimeout(resolve, 2000);
+    });
+}
+
 import { getCurrentUser, clearCurrentUser, getUsers, saveUsers, User } from "./user.js";
 import { renderSidebar } from "./sidebar.js";
 import { loginUrl } from "./constant.js";
@@ -451,7 +458,7 @@ clearRoleButton.addEventListener("click", () => {
 });
 
 // All form validation happens here so errors appear only after Save User is clicked.
-userForm.addEventListener("submit", (event) => {
+userForm.addEventListener("submit", async(event) => {
     event.preventDefault();
 
     const isNameValid = validateName();
@@ -472,6 +479,9 @@ userForm.addEventListener("submit", (event) => {
         return;
     }
 
+    showLoader();
+    try{
+        await waitForTwoSeconds();
     const enteredPassword = passwordInput.value.trim();
 
     // During Edit, an empty password means the admin did not request a password change.
@@ -517,6 +527,9 @@ userForm.addEventListener("submit", (event) => {
     originalPassword = "";
 
     console.log("User saved successfully");
+}finally{
+    hideLoader();
+}
 });
 
 // Search and filters only refresh the displayed table.
